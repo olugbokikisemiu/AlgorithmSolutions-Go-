@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	fmt.Printf("%+v", gradingStudents([]int32{73, 67, 38, 33}))
+	countApplesAndOranges(7, 11, 5, 15, []int32{-2, 2, 1}, []int32{5, -6})
 }
 
 func findWords(word []string) {
@@ -205,5 +205,23 @@ func gradingStudents(grades []int32) []int32 {
 		}
 	}
 	return result
+}
 
+func countApplesAndOranges(s int32, t int32, a int32, b int32, apples []int32, oranges []int32) {
+	var appleCount int
+	var orangeCount int
+	for i := 0; i < len(apples); i++ {
+		if a+apples[i] >= s && a+apples[i] <= t {
+			appleCount++
+		}
+	}
+
+	for i := 0; i < len(oranges); i++ {
+		if b+oranges[i] >= s && b+oranges[i] <= t {
+			orangeCount++
+		}
+	}
+
+	fmt.Println(appleCount)
+	fmt.Println(orangeCount)
 }
