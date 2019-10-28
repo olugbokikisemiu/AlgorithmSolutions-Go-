@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	countApplesAndOranges(7, 11, 5, 15, []int32{-2, 2, 1}, []int32{5, -6})
+	fmt.Println(kangaroo(2, 1, 1, 2))
 }
 
 func findWords(word []string) {
@@ -224,4 +224,18 @@ func countApplesAndOranges(s int32, t int32, a int32, b int32, apples []int32, o
 
 	fmt.Println(appleCount)
 	fmt.Println(orangeCount)
+}
+
+func kangaroo(x1 int32, v1 int32, x2 int32, v2 int32) string {
+	i := int32(0)
+	b2 := x2
+	for i < b2 {
+		x1 += v1
+		x2 += v2
+		if x1 == x2 {
+			return "YES"
+		}
+		i++
+	}
+	return "NO"
 }
