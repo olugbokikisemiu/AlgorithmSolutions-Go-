@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	fmt.Println(getTotalX([]int32{2, 4}, []int32{16, 32, 96}))
+	fmt.Println(breakingRecords([]int32{0, 9, 3, 10, 2, 20}))
 }
 
 func findWords(word []string) {
@@ -296,4 +296,30 @@ func PassesSecondRule(element int32, secondArray []int32) bool {
 	}
 
 	return len(goodStudents) == len(secondArray)
+}
+
+func breakingRecords(stat []int32) []int32 {
+	var minRecordsBroken int32
+	var maxRecordsBroken int32
+
+	min := stat[0]
+	max := int32(-1)
+
+	for _, val := range stat {
+		if val < min {
+			min = val
+			minRecordsBroken++
+		}
+
+		if val > max {
+			if max == -1 {
+				max = val
+				continue
+			}
+			max = val
+			maxRecordsBroken++
+		}
+	}
+
+	return []int32{maxRecordsBroken, minRecordsBroken}
 }
