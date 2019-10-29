@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	fmt.Println(kangaroo(2, 1, 1, 2))
+	fmt.Println(getTotalX([]int32{2, 4}, []int32{16, 32, 96}))
 }
 
 func findWords(word []string) {
@@ -238,4 +238,62 @@ func kangaroo(x1 int32, v1 int32, x2 int32, v2 int32) string {
 		i++
 	}
 	return "NO"
+}
+
+// func getTotalX(a []int32, b []int32) int32 {
+// 	counter := int32(0)
+// 	c := append(a, b...)
+// 	var value int32
+// 	fmt.Println("Join ", c)
+// 	for i := a[0]; i <= b[len(b)-1]; i++ {
+// 		lengthCounter := 0
+// 		for j := 0; j < len(c); j++ {
+// 			if c[j]%i == 0 {
+// 				fmt.Println("a ", i)
+// 				fmt.Println("b ", c[j])
+// 				value = c[j]
+// 				lengthCounter++
+// 			}
+// 		}
+// 		if lengthCounter == len(b) {
+// 			fmt.Println("V: ", value)
+// 			counter++
+// 		}
+// 	}
+// 	return counter
+// }
+
+func getTotalX(a []int32, b []int32) int32 {
+	var validCount int32
+	counter := int32(0)
+	for i := a[0]; i <= b[len(b)-1]; i++ {
+		if PassesFirstRule(a[0]+counter, a) && PassesSecondRule(a[0]+counter, b) {
+			validCount++
+		}
+		counter++
+	}
+
+	return validCount
+}
+
+func PassesFirstRule(element int32, firstArray []int32) bool {
+	var goodStudents []int32
+	for _, val := range firstArray {
+		if element%val == 0 {
+			goodStudents = append(goodStudents, element)
+		}
+	}
+
+	return len(goodStudents) == len(firstArray)
+}
+
+func PassesSecondRule(element int32, secondArray []int32) bool {
+	var goodStudents []int32
+	for _, val := range secondArray {
+		if val%element == 0 {
+			goodStudents = append(goodStudents, element)
+		}
+	}
+
+	return len(goodStudents) == len(secondArray)
 }
