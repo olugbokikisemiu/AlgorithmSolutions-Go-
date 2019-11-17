@@ -11,7 +11,8 @@ import (
 )
 
 func main() {
-	fmt.Println(breakingRecords([]int32{0, 9, 3, 10, 2, 20}))
+	t := "Codes times a great maven"
+	fmt.Println(LongestEvenWords(t))
 }
 
 func findWords(word []string) {
@@ -322,4 +323,17 @@ func breakingRecords(stat []int32) []int32 {
 	}
 
 	return []int32{maxRecordsBroken, minRecordsBroken}
+}
+
+func LongestEvenWords(words string) string {
+	maxLength := 0
+	longestString := "00"
+	wordSplit := strings.Split(words, " ")
+	for i := 0; i < len(wordSplit); i++ {
+		if len(wordSplit[i])%2 == 0 && len(wordSplit[i]) > maxLength {
+			maxLength = len(wordSplit[i])
+			longestString = wordSplit[i]
+		}
+	}
+	return longestString
 }
