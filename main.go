@@ -11,8 +11,8 @@ import (
 )
 
 func main() {
-	t := "Codes times a great maven"
-	fmt.Println(LongestEvenWords(t))
+	fmt.Println(BinarySearch([]int{1, 3, 5, 7, 9}, 1))
+	//fmt.Println(BirthChocolate([]int32{2, 5, 1, 3, 4, 4, 3, 5, 1, 1, 2, 1, 4, 1, 3, 3, 4, 2, 1}, 18, 7))
 }
 
 func findWords(word []string) {
@@ -336,4 +336,45 @@ func LongestEvenWords(words string) string {
 		}
 	}
 	return longestString
+}
+
+func BirthChocolate(bar []int32, d, m int32) int32 {
+	counter := int32(0)
+	forCounter := int32(0)
+	startP := int32(0)
+	cLength := m - 1
+	for forCounter < int32(len(bar)) {
+		sumValue := int32(0)
+		for i := startP; i <= cLength; i++ {
+			sumValue += bar[i]
+			forCounter++
+
+		}
+		if sumValue == d {
+			counter++
+		}
+		startP++
+		cLength = (cLength + m) - 1
+	}
+	return counter
+}
+
+func BinarySearch(list []int, item int) string {
+	low := 0
+	high := len(list) - 1
+	counter := 0
+	for low <= high {
+		mid := low + high
+		guess := list[mid]
+		if guess == item {
+			return strconv.Itoa(mid)
+		} else if guess > item {
+			high = mid - 1
+		} else if guess < item {
+			low = mid + 1
+		}
+		counter++
+		fmt.Printf("No of search %d \n", counter)
+	}
+	return "NONE"
 }
