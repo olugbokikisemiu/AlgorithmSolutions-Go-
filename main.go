@@ -11,7 +11,8 @@ import (
 )
 
 func main() {
-	fmt.Println(BinarySearch([]int{1, 3, 5, 7, 9}, 1))
+	//fmt.Println(SortAsc([]int{20, 4, 12, 1, 5, 3, 19}))
+	fmt.Println(SockMerchant(9, []int32{10, 20, 20, 10, 10, 30, 50, 10, 20}))
 	//fmt.Println(BirthChocolate([]int32{2, 5, 1, 3, 4, 4, 3, 5, 1, 1, 2, 1, 4, 1, 3, 3, 4, 2, 1}, 18, 7))
 }
 
@@ -367,6 +368,7 @@ func BinarySearch(list []int, item int) string {
 		mid := low + high
 		guess := list[mid]
 		if guess == item {
+			fmt.Printf("No of search %d \n", counter)
 			return strconv.Itoa(mid)
 		} else if guess > item {
 			high = mid - 1
@@ -377,4 +379,71 @@ func BinarySearch(list []int, item int) string {
 		fmt.Printf("No of search %d \n", counter)
 	}
 	return "NONE"
+}
+
+func smallest(arr []int) int {
+	//var sortArray []int
+	smallest := 9999
+	smallestIndex := 0
+	for i := 0; i < len(arr); i++ {
+		if arr[i] < smallest {
+			smallest = arr[i]
+			smallestIndex = i
+		}
+	}
+	return smallestIndex
+}
+
+func SortAsc(arr []int) []int {
+	var sortArray []int
+	for _ = range arr {
+		small := smallest(arr)
+		sortArray = append(sortArray, arr[small])
+		arr = append(arr[:small], arr[small+1:]...)
+	}
+	return sortArray
+}
+
+func Letter(l, n string) bool {
+	s := strings.Fields(l)
+	var count int
+	for i := 0; i < len(s); i++ {
+		if strings.Contains(n, s[i]) {
+			count++
+		}
+	}
+	if count == len(s) {
+		return true
+	}
+	return false
+}
+
+func Solution(a []int) int {
+	var count int
+	for i := 1; i < len(a); i++ {
+		if a[i-1] == a[i] {
+			count++
+		} else if a[i-1] > a[i] && a[i] > a[i+1] {
+			count++
+		}
+	}
+	return count / 2
+}
+
+func SockMerchant(n int32, ar []int32) int {
+	var pair int
+	sockArray := make(map[int32]int, len(ar))
+	for i := 0; i < len(ar); i++ {
+		if _, ok := sockArray[ar[i]]; !ok {
+			sockArray[ar[i]] = i
+		} else {
+			for k := range sockArray {
+				if ar[i] == k {
+					pair++
+					delete(sockArray, k)
+				}
+			}
+		}
+	}
+	return pair
 }
