@@ -12,7 +12,7 @@ import (
 
 func main() {
 	//fmt.Println(SortAsc([]int{20, 4, 12, 1, 5, 3, 19}))
-	fmt.Println(SockMerchant(9, []int32{10, 20, 20, 10, 10, 30, 50, 10, 20}))
+	fmt.Println(countingValleys(8, "DDUUUUDD"))
 	//fmt.Println(BirthChocolate([]int32{2, 5, 1, 3, 4, 4, 3, 5, 1, 1, 2, 1, 4, 1, 3, 3, 4, 2, 1}, 18, 7))
 }
 
@@ -446,4 +446,21 @@ func SockMerchant(n int32, ar []int32) int {
 		}
 	}
 	return pair
+}
+
+func countingValleys(n int32, s string) int32 {
+	path := strings.Split(s, "")
+	var level, valley int32
+	for i := 0; i < len(path); i++ {
+		if path[i] == "U" {
+			level++
+		} else if path[i] == "D" {
+			level--
+		}
+
+		if level == 0 && path[i] == "U" {
+			valley++
+		}
+	}
+	return valley
 }
