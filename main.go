@@ -8,11 +8,13 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/gocolly/colly"
 )
 
 func main() {
-	//fmt.Println(SortAsc([]int{20, 4, 12, 1, 5, 3, 19}))
-	fmt.Println(countingValleys(8, "DDUUUUDD"))
+	fmt.Println(NoOfOccurrence([]int{2, 3, 4, 3, 2, 1}, 2))
+	//crawlSite()
 	//fmt.Println(BirthChocolate([]int32{2, 5, 1, 3, 4, 4, 3, 5, 1, 1, 2, 1, 4, 1, 3, 3, 4, 2, 1}, 18, 7))
 }
 
@@ -463,4 +465,72 @@ func countingValleys(n int32, s string) int32 {
 		}
 	}
 	return valley
+}
+
+func crawlSite() {
+	c := colly.NewCollector(
+		// Visit only domains: hackerspaces.org, wiki.hackerspaces.org
+		colly.AllowedDomains("edmundmartin.com", "edmundmartin.com/writing-a-web-crawler-in-golang/"),
+	)
+
+	// On every a element which has href attribute call callback
+	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+		link := e.Attr("href")
+		// Print link
+		fmt.Printf("Link found: %q -> %s\n", e.Text, link)
+		// Visit link found on page
+		// Only those links are visited which are in AllowedDomains
+		c.Visit(e.Request.AbsoluteURL(link))
+	})
+
+	// Before making a request print "Visiting ..."
+	c.OnRequest(func(r *colly.Request) {
+		fmt.Println("Visiting", r.URL.String())
+	})
+
+	c.Visit("https://edmundmartin.com/writing-a-web-crawler-in-golang/")
+}
+func averageDistance(pointa, pointb, pointc []float32) float32 {
+	xCordinate := pointa[0] + pointb[0] + pointc[0]
+	yCordinate := pointa[1] + pointb[1] + pointc[1]
+
+	return xCordinate + yCordinate/2
+}
+
+func MostPopularNumber(ar []int, l int) int {
+	if len(ar) == 0 {
+		return 0
+	} else if len(ar) == 1 {
+		return ar[0]
+	}
+	sockArray := make(map[int]int, len(ar))
+	counter := 1
+	max := 0
+	var popular int
+	for i := 0; i < len(ar); i++ {
+		if _, ok := sockArray[ar[i]]; !ok {
+			sockArray[ar[i]] = counter
+		} else {
+			for _, v := range sockArray {
+				sockArray[ar[i]] = v + 1
+			}
+		}
+	}
+	for k, v := range sockArray {
+		if v > max {
+			max = v
+			popular = k
+		}
+	}
+	return popular
+}
+
+func NoOfOccurrence(arr []int, a int) int {
+	var occur int
+	for i := 0; i < len(arr); i++ {
+		if arr[i] == a {
+			occur++
+		}
+	}
+	return occur
 }
